@@ -13,24 +13,27 @@
   .landing_container {
     display: flex;
     flex-direction: column;
-    gap: 8rem;
-    padding-bottom: 10rem;
+    gap: 4rem;
+    padding-bottom: 6rem;
   }
 
   .landing_container > img {
-    height: 15rem;
+    width: 100%;
     object-fit: cover;
   }
+  
 
   .home_section {
     display: flex;
-    justify-content: space-around;
-    text-align: center;
+    flex-direction: column;
     align-items: center;
+    gap: 2rem;
+    text-align: center;
   }
 
   .home_section > div {
-    width: 50%;
+    width: 100%;
+    max-width: 25rem;
   }
 
   .home_section > div > h2 {
@@ -42,22 +45,22 @@
   .home_section > div > h3 {
     font-size: 1.5rem;
     font-weight: 500;
-    padding: 0 4rem;
+    padding: 0 2rem;
     margin: 0;
   }
 
-  .landing_container div img {
-    width: 15rem;
-    height: 15rem;
-    object-fit: cover;
-    margin: auto;
+  .home_section > img {
+    width: 80%;
+    max-width: 20rem;
+    height: auto;
+    margin-top: 1rem;
   }
 
   .category_section {
     display: flex;
-    justify-content: space-around;
-    gap: 5rem;
-    margin: 0 5rem;
+    flex-direction: column;
+    gap: 3rem;
+    margin: 0 2rem;
   }
 
   .category_item {
@@ -65,21 +68,63 @@
   }
 
   .category_item img {
-    width: 10rem;
-    height: 10rem;
+    width: 8rem;
+    height: 8rem;
     object-fit: cover;
     border-radius: 50%;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
   .category_item h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 600;
     margin: 0;
   }
 
   .category_item p {
     font-size: 1.2rem;
+  }
+
+  @media (min-width: 768px) {
+    .landing_container {
+      gap: 8rem;
+    }
+
+    .landing_container > img {
+    width: 100%;
+    height: 15rem;
+    object-fit: cover;
+  }
+
+    .home_section {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+
+    .home_section > div {
+      width: 50%;
+    }
+
+    .home_section > div > h2 {
+      font-size: 3rem;
+    }
+
+    .home_section > div > h3 {
+      font-size: 1.8rem;
+      padding: 0 4rem;
+    }
+
+    .home_section > img {
+      margin-top: 0;
+    }
+
+    .category_section {
+      flex-direction: row;
+    }
+
+    .category_item {
+      flex: 1;
+    }
   }
 </style>
 

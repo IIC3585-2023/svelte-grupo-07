@@ -54,13 +54,14 @@
   }
 
   .card-header h3 {
+    width: 40%;
     font-size: 18px;
     font-weight: bold;
     margin: 0;
   }
 
-  .card-header p {
-    margin: 0;
+  .card-header p{
+    width: 30%;
   }
 
   .card-header p span {

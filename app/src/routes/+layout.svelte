@@ -1,7 +1,18 @@
 <script>
+  import './styles.css'
   import Navbar from '../components/Navbar.svelte';
   import Sidebar from '../components/Sidebar.svelte';
   import Footer from '../components/Footer.svelte';
+  import { onMount } from 'svelte';
+
+
+  let isMobile = false;
+  onMount(() => {
+    isMobile = window.innerWidth < 768;
+    window.addEventListener('resize', () => {
+      isMobile = window.innerWidth < 768;
+    });
+  });
 
   let isSidebarCollapsed = false;
 
@@ -21,16 +32,32 @@
   .main_container {
     flex-grow: 1;
     display: flex;
-    min-width: calc(100vw - 17px);
     max-width: 100vw;
+    padding-left: 2.5rem;
+  }
+
+  .main_container.hidden {
+    padding-left: 200px;
+  }
+
+  @media (max-width: 768px) {
+    .main_container {
+      padding-left: 0;
+    }
+
+    .main_container.hidden {
+      padding-left: 0;
+    }
   }
 
 </style>
 
 <div class="app">
   <Navbar />
-  <div class="main_container">
-    <Sidebar on:toggle-sidebar={handleToggleSidebar} />
+  <div class="main_container {isSidebarCollapsed ? 'hidden' : ''}">
+    {#if !isMobile}
+      <Sidebar on:toggle-sidebar={handleToggleSidebar}/>
+    {/if}
 		<slot />
   </div>
   <Footer />

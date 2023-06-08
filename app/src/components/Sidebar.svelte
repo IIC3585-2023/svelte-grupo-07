@@ -1,15 +1,31 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
 
   let showWiki = false;
   let showSidebar = false;
+  let showMenu = false;
+
+  let isMobile = false;
+
+  onMount(() => {
+    isMobile = window.innerWidth < 768;
+    window.addEventListener('resize', () => {
+      isMobile = window.innerWidth < 768;
+    });
+  });
 
   const dispatch = createEventDispatcher();
 
+  function toggleMenu() {
+    showMenu = !showMenu;
+    console.log(showMenu);
+    dispatch('toggle-menu', { showMenu });
+  }
+
   function toggleWiki() {
     // Toggle the visibility of the wiki sub-menu
-    showWiki = !showWiki;
+    showWiki = !showWiki;;
   }
 
   function toggleNavbar() {
@@ -17,8 +33,10 @@
     showSidebar = !showSidebar;
     const sidebar = document.querySelector('.sidebar');
     const sidebar_content = document.querySelector('.sidebar_content');
+    const main_container = document.querySelector('.main_container');
     sidebar?.classList.toggle('hidden');
     sidebar_content?.classList.toggle('hidden');
+    main_container?.classList.toggle('hidden');
     // Emit the toggle-sidebar event
     dispatch('toggle-sidebar', { showSidebar });
   }
@@ -78,12 +96,58 @@
     min-height: 1rem;
     width: 2.5rem;
   }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      display: none;
+    }
+    .menu {
+      padding: 10px;
+    }
+
+    .menu-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      position: absolute;
+      top: 4rem;
+      left: 0;
+      width: 100%;
+      background-color: #f6f5f5;
+      border-right: 1px solid #e0e0e0;
+    }
+
+    .sidebar_content {
+      padding: 0;
+      text-align: center;
+      width: 100%;
+    }
+
+    .sidebar_content li {
+      padding: 14px 0;
+      text-decoration: none;
+      display: block;
+    }
+
+    .sidebar_content li:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .sidebar_content ul {
+      padding: 0;
+    }
+  }
+
+
 </style>
 
+{#if !isMobile}
 <div class="sidebar {showSidebar ? '' : 'hidden'}">
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="menu-button" on:click={toggleNavbar}>
-    <i class="fa fa-bars"></i>
+    <i class="fas fa-bars"></i>
   </div>
   <ul class="sidebar_content {showSidebar ? '' : 'hidden'}">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -102,3 +166,27 @@
     {/if}
   </ul>
 </div>
+{:else}
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="menu" >
+  <div class="menu-button" on:click={toggleMenu}>
+    <i class="fas fa-bars"></i>
+  </div>
+  <div class="menu-content {showMenu ? '' : 'hidden'}">
+    <ul class="sidebar_content {showMenu ? '' : 'hidden'}">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <li on:click={() => navigate('/')}>Home</li>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <li >Wiki</li>
+        <ul>
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <li on:click={() => navigate('/wiki/characters')}>Characters</li>
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <li on:click={() => navigate('/wiki/locations')}>Locations</li>
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <li on:click={() => navigate('/wiki/episodes')}>Episodes</li>
+        </ul>
+    </ul>
+  </div>
+</div>
+{/if}

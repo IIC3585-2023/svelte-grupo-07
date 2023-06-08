@@ -93,11 +93,11 @@
     {#if showWiki}
       <ul>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <li on:click={() => navigate('/wiki/characters')}>Characters</li>
+        <li on:click={() => navigate('/characters')}>Characters</li>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <li on:click={() => navigate('/wiki/locations')}>Locations</li>
+        <li on:click={() => navigate('/locations')}>Locations</li>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <li on:click={() => navigate('/wiki/episodes')}>Episodes</li>
+        <li on:click={() => navigate('/episodes')}>Episodes</li>
       </ul>
     {/if}
   </ul>

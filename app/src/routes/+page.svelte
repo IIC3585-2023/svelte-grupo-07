@@ -108,19 +108,19 @@
 
   <div class="category_section">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class="category_item" on:click={() => navigate('/wiki/characters')}>
+    <div class="category_item" on:click={() => navigate('/characters')}>
       <img src={episodesImage} alt="Characters" />
       <h2>Personajes</h2>
       <p>Descubre más sobre los personajes de Rick and Morty.</p>
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class="category_item" on:click={() => navigate('/wiki/locations')}>
+    <div class="category_item" on:click={() => navigate('/locations')}>
       <img src={charactersImage} alt="Locations" />
       <h2>Localizaciones</h2>
       <p>Explora los diferentes lugares en el universo de Rick and Morty.</p>
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class="category_item" on:click={() => navigate('/wiki/episodes')}>
+    <div class="category_item" on:click={() => navigate('/episodes')}>
       <img src={locationsImage} alt="Episodes" />
       <h2>Episodios</h2>
       <p>Revive tus episodios favoritos y descubre nuevos.</p>

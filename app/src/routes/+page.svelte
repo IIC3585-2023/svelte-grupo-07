@@ -124,6 +124,7 @@
 
     .category_item {
       flex: 1;
+      cursor: pointer;
     }
   }
 </style>

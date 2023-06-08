@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte';
-  import { navigate } from 'svelte-routing';
+  import { navigate, Link } from 'svelte-routing';
 
   let showWiki = false;
   let showSidebar = false;
@@ -54,22 +54,33 @@
     overflow-y: auto; /* Enable vertical scrolling if needed */
   }
 
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
   .sidebar ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
   }
 
-  .sidebar ul li {
+  .sidebar ul li,
+  .sidebar ul a {
     padding: 1rem 1.5rem;
     cursor: pointer;
   }
 
-  .sidebar ul li:hover {
+  .sidebar ul a {
+    display: block;
+  }
+
+  .sidebar ul li:hover,
+  .sidebar ul a:hover {
     background-color: #e0e0e0;
   }
 
-  .sidebar ul ul li {
+  .sidebar ul ul a {
     padding: 0.5rem 3rem;
   }
 
@@ -84,7 +95,8 @@
     font-size: 20px;
   }
 
-  .sidebar_content > li {
+  .sidebar_content > li,
+  .sidebar_content > a {
     padding-left: 3rem;
   }
 
@@ -124,13 +136,15 @@
       width: 100%;
     }
 
-    .sidebar_content li {
+    .sidebar_content li,
+    .sidebar_content a {
       padding: 14px 0;
       text-decoration: none;
       display: block;
     }
 
-    .sidebar_content li:hover {
+    .sidebar_content li:hover,
+    .sidebar_content a:hover {
       background-color: #ddd;
       color: black;
     }
@@ -151,17 +165,17 @@
   </div>
   <ul class="sidebar_content {showSidebar ? '' : 'hidden'}">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <li on:click={() => navigate('/')}>Home</li>
+    <a href="/">Home</a>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <li on:click={toggleWiki}>Wiki</li>
     {#if showWiki}
       <ul>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <li on:click={() => navigate('/characters')}>Characters</li>
+        <a href='/characters'>Characters</a>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <li on:click={() => navigate('/locations')}>Locations</li>
+        <a href='/locations'>Locations</a>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <li on:click={() => navigate('/episodes')}>Episodes</li>
+        <a href='/episodes'>Episodes</a>
       </ul>
     {/if}
   </ul>
@@ -175,16 +189,16 @@
   <div class="menu-content {showMenu ? '' : 'hidden'}">
     <ul class="sidebar_content {showMenu ? '' : 'hidden'}">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <li on:click={() => navigate('/')}>Home</li>
+      <a href="/">Home</a>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <li >Wiki</li>
         <ul>
           <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <li on:click={() => navigate('/wiki/characters')}>Characters</li>
+          <a href="/">Characters</a>
           <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <li on:click={() => navigate('/wiki/locations')}>Locations</li>
+          <a href="/">Locations</a>
           <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <li on:click={() => navigate('/wiki/episodes')}>Episodes</li>
+          <a href="/">Episodes</a>
         </ul>
     </ul>
   </div>

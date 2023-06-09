@@ -21,6 +21,7 @@
     margin-bottom: 16px;
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
 
   .character-card img {

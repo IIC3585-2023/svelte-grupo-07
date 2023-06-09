@@ -1,11 +1,12 @@
 <script>
   // @ts-nocheck
   import { getCharactersByIds } from '../../services';
-
+  import { seenEpisodes } from '../../store';
+  import { onMount } from 'svelte';
+  
   export let episode;
 
   let showCharacters = false;
-
   let characterRows = [];
 
   async function toggleCharacters(episodeCharacters) {
@@ -27,6 +28,17 @@
     const characters = await getCharactersByIds(episodeCharacters)
     calculateCharacterRows(characters)
   }
+
+  let seenEpisodesSubscription;
+  onMount(() => {
+    seenEpisodesSubscription = seenEpisodes.subscribe((episodes) => {
+      if (episodes.includes(episode.id)) {
+        episode.seen = true;
+      } else {
+        episode.seen = false;
+      }
+    });
+  });
 
 </script>
 
@@ -131,6 +143,16 @@
     border-radius: 50%;
     margin-right: 10px;
   }
+
+  .seen-label {
+    display: flex;
+    align-items: center;
+  }
+
+  .seen-checkbox {
+    margin-left: 8px;
+  }
+
 </style>
 
 <div class="episode-card">
@@ -138,8 +160,14 @@
     <h3>{episode.name}</h3>
     <p><span>Fecha: </span>{episode.air_date}</p>
     <p><span>Episodio: </span>{episode.episode}</p>
+    <p><span>
+      <label class="seen-label">
+        Visto:
+        <input type="checkbox" bind:checked={episode.seen} class="seen-checkbox" />
+      </label>
+    </span></p>
     <button on:click={() => toggleCharacters(episode.characters)} class="arrow-button">
-      <i class:arrow-up={!showCharacters} class:arrow-down={showCharacters}></i>
+      <i class:arrow-down={!showCharacters} class:arrow-up={showCharacters}></i>
     </button>
   </div>
   {#if showCharacters}

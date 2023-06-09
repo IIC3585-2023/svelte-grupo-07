@@ -1,6 +1,7 @@
 <script>
   // @ts-nocheck
   import { getCharactersByIds } from '../../services';
+  import CharacterItem from '../../components/CharacterItem.svelte';
 
   export let episode;
 
@@ -98,25 +99,8 @@
     display: flex;
     flex-wrap: wrap;
   }
-
-  .character-item {
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  @media (max-width: 768px) {
-    .character-item {
-      width: 40%;
-    }
-  }
-
+  
   @media (max-width: 576px) {
-    .character-item {
-      width: 100%;
-    }
     .card-header h3 {
       font-size: 12px;
     }
@@ -125,12 +109,6 @@
     }
   }
 
-  .character-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
 </style>
 
 <div class="episode-card">
@@ -139,7 +117,7 @@
     <p><span>Fecha: </span>{episode.air_date}</p>
     <p><span>Episodio: </span>{episode.episode}</p>
     <button on:click={() => toggleCharacters(episode.characters)} class="arrow-button">
-      <i class:arrow-up={!showCharacters} class:arrow-down={showCharacters}></i>
+      <i class:arrow-up={showCharacters} class:arrow-down={!showCharacters}></i>
     </button>
   </div>
   {#if showCharacters}
@@ -148,10 +126,7 @@
       {#each characterRows as row, rowIndex (rowIndex)}
         <div class="character-row">
           {#each row as character, index (index)}
-            <div class="character-item" key={index}>
-              <img src={character.image} alt={character.name} class="character-image" />
-              <span>{character.name}</span>
-            </div>
+            <CharacterItem character={character} />
           {/each}
         </div>
       {/each}

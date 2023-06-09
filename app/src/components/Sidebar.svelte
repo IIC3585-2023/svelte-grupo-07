@@ -178,6 +178,7 @@
         <a href='/episodes'>Episodes</a>
       </ul>
     {/if}
+    <a href='/portalpicker'>Portal Picker</a>
   </ul>
 </div>
 {:else}
@@ -194,12 +195,13 @@
       <li >Wiki</li>
         <ul>
           <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <a href="/">Characters</a>
+          <a href="/characters">Characters</a>
           <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <a href="/">Locations</a>
+          <a href="/locations">Locations</a>
           <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <a href="/">Episodes</a>
+          <a href="/episodes">Episodes</a>
         </ul>
+      <a href='/portalpicker'>Portal Picker</a>
     </ul>
   </div>
 </div>

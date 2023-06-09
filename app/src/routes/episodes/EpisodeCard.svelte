@@ -54,14 +54,15 @@
   }
 
   .card-header h3 {
-    width: 40%;
+    width: 38%;
     font-size: 18px;
     font-weight: bold;
-    margin: 0;
+    margin-right: 2%;
   }
 
   .card-header p{
-    width: 30%;
+    width: 28%;
+    margin-right: 2%;
   }
 
   .card-header p span {
@@ -115,6 +116,12 @@
   @media (max-width: 576px) {
     .character-item {
       width: 100%;
+    }
+    .card-header h3 {
+      font-size: 12px;
+    }
+    .card-header p{
+      font-size: 12px;
     }
   }
 

@@ -23,9 +23,6 @@
     );
   }
 
-  /**
-   * @param {number} page
-   */
   async function fetchCharacters(page) {
     try {
       const characters = await getAllCharacters(page.detail);

@@ -43,16 +43,7 @@ export async function getAllEpisodes(page) {
       `${apiUrl}/episode?page=${page}`
     );
     const episodes = res.data.results
-    const episodesArray = Object.values(episodes);
-    for(let episode of episodesArray){
-      const characters = []
-      for(let characterUrl of episode.characters){
-        const character = await getCharacterById('', characterUrl)
-        characters.push({id: character.id, name:character.name, image: character.image })
-      }
-      episode.characters = characters
-    }
-    return episodesArray
+    return episodes
   } catch (error) {
     console.log(error)
   }
@@ -67,17 +58,25 @@ export async function getAllLocations(page) {
       `${apiUrl}/location?page=${page}`
     );
     const locations = res.data.results
-    const loacationsArray = Object.values(locations);
-    for(let location of loacationsArray){
-      const residents = []
-      for(let residentUrl of location.residents){
-        const resident = await getCharacterById('', residentUrl)
-        residents.push({id: resident.id, name:resident.name, image: resident.image })
-      }
-      location.characters = residents
-    }
-    return loacationsArray
+    return locations
   } catch (error) {
+    console.log(error)
+  }
+}
+
+/**
+ * @param {any} characters
+ */
+export async function getCharactersByIds(characters){
+  try{
+    const charactersObject = []
+    for(let characterUrl of characters){
+      const character = await getCharacterById('', characterUrl)
+      charactersObject.push({id: character.id, name:character.name, image: character.image })
+    }
+    console.log(charactersObject)
+    return charactersObject
+  } catch (error){
     console.log(error)
   }
 }

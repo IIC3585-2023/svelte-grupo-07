@@ -1,6 +1,7 @@
 <script>
 // @ts-nocheck
 
+import { onMount } from 'svelte';
   import FilterSelector from '../../components/FilterSelector.svelte';
   import CharacterItem from '../../components/CharacterItem.svelte';
   import portalImage from '$lib/images/ram_logo.png';
@@ -9,6 +10,14 @@
   import { getFirstEpisode } from '../../services';
   let recommendedEpisode = 1;
   let answer = -1;
+  let isMobile = false;
+
+  onMount(() => {
+    isMobile = window.innerWidth < 768;
+    window.addEventListener('resize', () => {
+      isMobile = window.innerWidth < 768;
+    });
+  });
 
   const activatePortal = async () => {
     answer = 0;
@@ -143,7 +152,9 @@
     font-weight: bold;
   }
 
-
+  .portal-gif-mobile {
+    width: 100%;
+  }
 </style>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -157,8 +168,13 @@
       {#if answer === -1}
         <button on:click={activatePortal}>Activar Portal</button>
       {:else if answer===0}
-        <h2>Eligiendo episodio...</h2>
-        <img src={portalGif} alt="Portal Gif"/>
+        {#if isMobile}
+          <h2>Eligiendo episodio...</h2>
+          <img src={portalGif} alt="Portal Gif" class="portal-gif-mobile"/>
+        {:else}
+          <h2>Eligiendo episodio...</h2>
+          <img src={portalGif} alt="Portal Gif"/>
+        {/if}
       {:else if answer===1}
         <h2>El episodio recomendado es</h2>
         <h3>{recommendedEpisode.name} {recommendedEpisode.episode}</h3>

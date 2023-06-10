@@ -1,11 +1,19 @@
 <script>
 // @ts-nocheck
 
+    import CharacterDetailModal from "../routes/characters/CharacterDetailModal.svelte";
+
+// @ts-nocheck
+
   import { addFilter, removeFilter } from "../stores/PortalStore";
   export let character;
   export let toPicker;
   export let action = 1; // -1 remove 0 nothing 1 add
   export let dispatch;
+  let isModalOpen = false;
+	function toggleModal() {
+		isModalOpen = !isModalOpen;
+	}
 
   const selectCharacter = () => {
     if (toPicker) {
@@ -20,7 +28,7 @@
     else
     {
       // show modal of character
-      console.log(character);
+      toggleModal();
     }
   };
 
@@ -94,6 +102,10 @@
     <i class="fa-solid fa-plus add"></i>
     {/if}
   </div>
-  
+  {#if isModalOpen}
+    <CharacterDetailModal
+      characterId={character.id}
+    />
+  {/if}  
   <span>{character.name}</span>
 </div>

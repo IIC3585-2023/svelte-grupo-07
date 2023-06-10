@@ -1,13 +1,20 @@
-import { writable } from 'svelte/store';
+// @ts-nocheck
+import { writable, get } from 'svelte/store';
 
 export const seenEpisodesStore = writable([]);
 
 export const countSeenEpisodesStore = {
   subscribe: seenEpisodesStore.subscribe,
   update: (episodes) => {
-    seenEpisodesStore.set(episodes);
+    seenEpisodesStore.update((prevEpisodes) => {
+      if (!prevEpisodes.includes(episodes)) {
+        return [...prevEpisodes, episodes];
+      }
+      return prevEpisodes;
+    });
   },
   getCount: () => {
-    return seenEpisodesStore.get().length;
+    return get(seenEpisodesStore).length;
   },
 };
+

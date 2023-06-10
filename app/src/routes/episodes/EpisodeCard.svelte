@@ -1,10 +1,11 @@
 <script>
   // @ts-nocheck
   import { getCharactersByIds } from '../../services';
-  import { seenEpisodes } from '../../store';
-  import { onMount } from 'svelte';
+  import { seenEpisodesStore, countSeenEpisodesStore } from '../../store';
+  import { onMount, onDestroy } from 'svelte';
   
   export let episode;
+  export let seasons;
 
   let showCharacters = false;
   let characterRows = [];
@@ -30,8 +31,9 @@
   }
 
   let seenEpisodesSubscription;
+
   onMount(() => {
-    seenEpisodesSubscription = seenEpisodes.subscribe((episodes) => {
+    seenEpisodesSubscription = seenEpisodesStore.subscribe((episodes) => {
       if (episodes.includes(episode.id)) {
         episode.seen = true;
       } else {
@@ -40,6 +42,29 @@
     });
   });
 
+  onDestroy(() => {
+    seenEpisodesSubscription?.();
+  });
+
+  function handleSeen(event) {
+    const isChecked = event.target.checked;
+    seenEpisodesStore.update((episodes) => {
+      if (isChecked) {
+        return [...episodes, episode.id];
+      }
+      return episodes.filter((ep) => ep !== episode.id);
+    });
+    const [seasonNumber] = episode.episode.split('E');
+    if (episode.seen) {
+      seasons[seasonNumber].seenEpisodes.push(episode.id);
+    } else {
+      seasons[seasonNumber].seenEpisodes = seasons[
+        seasonNumber
+      ].seenEpisodes.filter((ep) => ep !== episode.id);
+    }
+    seasons[seasonNumber].totalEpisodes = seasons[seasonNumber].seenEpisodes.length;
+    console.log(`Episodio ${episode.episode} visto, de la temporada ${seasonNumber}. Total vistos temporada: ${seasons}`)
+  }
 </script>
 
 <style>
@@ -160,12 +185,14 @@
     <h3>{episode.name}</h3>
     <p><span>Fecha: </span>{episode.air_date}</p>
     <p><span>Episodio: </span>{episode.episode}</p>
-    <p><span>
-      <label class="seen-label">
-        Visto:
-        <input type="checkbox" bind:checked={episode.seen} class="seen-checkbox" />
-      </label>
-    </span></p>
+    <p>
+      <span>
+        <label class="seen-label">
+          Visto:
+          <input type="checkbox" bind:checked={episode.seen} class="seen-checkbox" on:change={handleSeen} />
+        </label>
+      </span>
+    </p>
     <button on:click={() => toggleCharacters(episode.characters)} class="arrow-button">
       <i class:arrow-down={!showCharacters} class:arrow-up={showCharacters}></i>
     </button>

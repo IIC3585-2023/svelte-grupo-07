@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
   import { onMount } from 'svelte';
   import { getAllCharacters, getAllLocations } from '../services';
   import { addFilter } from "../stores/PortalStore";
@@ -115,7 +117,7 @@
   {#if showCharacters}
     <div class="select-pool">
       {#each characters as character}
-        <CharacterItem character={character} action={1} dispatch={dispatch} on:characterSelected={removeCharacter} />
+        <CharacterItem character={character} action={1} dispatch={dispatch} on:characterSelected={removeCharacter} toPicker={true} />
       {/each}
     </div>
   {:else}

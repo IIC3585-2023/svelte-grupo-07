@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
   import FilterSelector from '../../components/FilterSelector.svelte';
   import CharacterItem from '../../components/CharacterItem.svelte';
   import portalImage from '$lib/images/ram_logo.png';
@@ -166,7 +168,7 @@
     <div class="filter-selected">
       <div class="filters characters">
           {#each $characterFilters as character}
-            <CharacterItem character={character} action={-1} />
+            <CharacterItem character={character} action={-1} toPicker={true} />
           {/each}
       </div>
       <div class="filters locations">

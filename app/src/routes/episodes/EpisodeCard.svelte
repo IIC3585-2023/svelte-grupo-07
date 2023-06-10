@@ -50,22 +50,25 @@
 
   function handleSeen(event) {
     const isChecked = event.target.checked;
+    const [seasonNumber] = episode.episode.split('E');
     seenEpisodesStore.update((episodes) => {
       if (isChecked) {
         return [...episodes, episode.id];
       }
       return episodes.filter((ep) => ep !== episode.id);
     });
-    const [seasonNumber] = episode.episode.split('E');
-    if (episode.seen) {
+    if (isChecked) {
       seasons[seasonNumber].seenEpisodes.push(episode.id);
+      console.log(`Ahora de la temporada ${seasonNumber} he visto ${seasons[seasonNumber].seenEpisodes.length} episodios`);
     } else {
       seasons[seasonNumber].seenEpisodes = seasons[
         seasonNumber
       ].seenEpisodes.filter((ep) => ep !== episode.id);
+      console.log(`Ahora de la temporada ${seasonNumber} he visto ${seasons[seasonNumber].seenEpisodes.length} episodios`);
     }
-    seasons[seasonNumber].totalEpisodes = seasons[seasonNumber].seenEpisodes.length;
-    console.log(`Episodio ${episode.episode} visto, de la temporada ${seasonNumber}. Total vistos temporada: ${seasons}`)
+    seasons[seasonNumber].progress = Math.floor(
+      (seasons[seasonNumber].seenEpisodes.length / seasons[seasonNumber].totalEpisodes) * 100
+    );
   }
 </script>
 
@@ -147,13 +150,6 @@
     }
   }
 
-  .character-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-
   .seen-label {
     display: flex;
     align-items: center;
@@ -188,7 +184,7 @@
       {#each characterRows as row, rowIndex (rowIndex)}
         <div class="character-row">
           {#each row as character, index (index)}
-            <CharacterItem character={character} />
+            <CharacterItem character={character} toPicker={false} />
           {/each}
         </div>
       {/each}

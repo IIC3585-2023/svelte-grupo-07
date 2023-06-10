@@ -25,6 +25,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 0;
+    z-index: 1;
   }
   
   h3 {
@@ -38,18 +39,6 @@
     width: 50px;
     height: 50px;
   }
-  .menu-button {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    cursor: pointer;
-  }
-
-  .menu-button i {
-    font-size: 20px;
-  }
-
-
 </style>
 
 <header>

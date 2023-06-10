@@ -1,16 +1,26 @@
 <script>
+// @ts-nocheck
+
   import { addFilter, removeFilter } from "../stores/PortalStore";
   export let character;
+  export let toPicker;
   export let action = 1; // -1 remove 0 nothing 1 add
   export let dispatch;
 
   const selectCharacter = () => {
-    console.log(action);
-    if (action === -1) {
-      removeFilter('character', character);
-    } else if (action === 1) {
-      addFilter('character', character);
-      dispatch('characterSelected', character);
+    if (toPicker) {
+      console.log(action);
+      if (action === -1) {
+        removeFilter('character', character);
+      } else if (action === 1) {
+        addFilter('character', character);
+        dispatch('characterSelected', character);
+      }
+    }
+    else
+    {
+      // show modal of character
+      console.log(character);
     }
   };
 
@@ -78,9 +88,9 @@
 <div on:click={selectCharacter} class="character-item">
   <div class="image-container">
     <img src={character.image} alt={character.name} class="character-image" />
-    {#if action === -1}
+    {#if action === -1 && toPicker}
     <i class="fa-solid fa-circle-minus remove"></i>
-    {:else if action === 1}
+    {:else if action === 1 && toPicker}
     <i class="fa-solid fa-plus add"></i>
     {/if}
   </div>

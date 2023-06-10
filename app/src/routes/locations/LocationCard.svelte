@@ -126,7 +126,7 @@
       {#each characterRows as row, rowIndex (rowIndex)}
         <div class="character-row">
           {#each row as character, index (index)}
-            <CharacterItem character={character} />
+            <CharacterItem character={character} toPicker={false} />
           {/each}
         </div>
       {/each}

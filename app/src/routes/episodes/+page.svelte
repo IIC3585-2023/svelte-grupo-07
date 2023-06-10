@@ -42,6 +42,9 @@
       for (let i = 0; i < items.length; i++) {
         const episode = items[i];
         const [seasonNumber] = episode.episode.split('E');
+        // get the episode number and convert it to integer
+        const episodeNumber = Number(episode.episode.split('E')[1]);
+        const lastSeasonNumber =seasonNumber;
 
         if (!seasons[seasonNumber]) {
           seasons[seasonNumber] = {
@@ -50,6 +53,8 @@
             totalEpisodes: 0,
             progress: 0,
           };
+        } else {
+          seasons[lastSeasonNumber].totalEpisodes = episodeNumber;
         }
       }
     } catch (error) {
@@ -59,20 +64,18 @@
 
   const toggleProgress = () => {
     showProgress = !showProgress;
+    calculateProgress();
   };
 
   const calculateProgress = () => {
     for (let i = 0; i < items.length; i++) {
       const episode = items[i];
       const [seasonNumber] = episode.episode.split('E');
-      seasons[seasonNumber].totalEpisodes++;
       seasons[seasonNumber].progress = Math.floor(
         (seasons[seasonNumber].seenEpisodes.length / seasons[seasonNumber].totalEpisodes) * 100
       );
     }
-    console.log(seasons);
   };
-
   countSeenEpisodesStore.subscribe(calculateProgress);
 </script>
 
@@ -112,29 +115,49 @@
   background-color: #ddd;
   border-radius: 5px;
   overflow: hidden;
+  margin-left: 10px;
 }
 
 .progress-bar-inner {
   height: 100%;
-  background-color: #4caf50;
+  background-color: #74cd0fca;
+}
+
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.show-progress-button {
+  background-color: #74cd0fca;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 </style>
 
 <div>
   <PageHeader title={title} bind:searchTerm={searchTerm} />
-  <h3>Has visto {countSeenEpisodes} episodios</h3>
-  <button on:click={toggleProgress}>
-    {#if showProgress}
-      Ocultar progreso
-    {:else}
-      Mostrar progreso
-    {/if}
-  </button>
-  {#if showProgress}
-    <div class="progress-section">
-      <h2>Progreso de temporadas</h2>
-      {#each Object.values(seasons) as season}
+  <div class="card-container">
+    <div class="progress-container">
+      <h3>Has visto {countSeenEpisodes} episodios</h3>
+      <button on:click={toggleProgress} class="show-progress-button">
+        {#if showProgress}
+        Ocultar progreso
+        {:else}
+        Mostrar progreso
+        {/if}
+      </button>
+      {#if showProgress}
+      <div class="progress-section">
+        <h2>Progreso de temporadas</h2>
+        {#each Object.values(seasons) as season}
         <div class="season-progress">
           <div class="season-info">
             <p>{season.title}</p>
@@ -144,10 +167,10 @@
             <div class="progress-bar-inner" style="width: {season.progress}%"></div>
           </div>
         </div>
-      {/each}
+        {/each}
+      </div>
+      {/if}
     </div>
-  {/if}
-  <div class="card-container">
     {#each filterItems as item (item.id)}
     <div class="episode-card">
       <EpisodeCard episode={item} seasons={seasons} ></EpisodeCard>

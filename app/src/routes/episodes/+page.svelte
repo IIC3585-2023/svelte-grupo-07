@@ -124,6 +124,7 @@
 }
 
 .progress-container {
+  width: calc(80vw);
   display: flex;
   flex-direction: column;
   align-items: center;

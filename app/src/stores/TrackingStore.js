@@ -23,7 +23,9 @@ export const seasonProgressStore = writable({});
 export const updateSeasonProgress = (seasonNumber, seenEpisodes, totalEpisodes) => {
   seasonProgressStore.update((prevProgress) => {
     const updatedProgress = { ...prevProgress };
+    const title = `Temporada ${seasonNumber}`;
     updatedProgress[seasonNumber] = {
+      title,
       seenEpisodes,
       totalEpisodes,
       progress: Math.floor((seenEpisodes.length / totalEpisodes) * 100),

@@ -9,7 +9,6 @@
   let showCharacters = true;
   let characters = [];
   let locations = [];
-  const dispatch = createEventDispatcher();
 
   const selectLocation = (location) => {
     addFilter('location', location);
@@ -28,10 +27,6 @@
   const fetchLocations = async () => {
     locations = await getAllLocations(1);
     console.log(locations);
-  };
-
-  const removeCharacter = (id) => {
-    characters = characters.filter((character) => character.name !== id.name);
   };
 
   const removeLocation = (id) => {
@@ -81,7 +76,7 @@
     flex-wrap: wrap;
     justify-content: flex-start;
   }
-  
+
   .column {
     flex-direction: column;
     gap: 0.5rem;
@@ -117,7 +112,7 @@
   {#if showCharacters}
     <div class="select-pool">
       {#each characters as character}
-        <CharacterItem character={character} action={1} dispatch={dispatch} on:characterSelected={removeCharacter} toPicker={true} />
+        <CharacterItem character={character} action={1} toPicker={true} />
       {/each}
     </div>
   {:else}

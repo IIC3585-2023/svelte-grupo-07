@@ -1,6 +1,6 @@
 <script>
   // @ts-nocheck
-  
+
   import { onMount } from 'svelte';
   import PageHeader from '../../components/PageHeader.svelte';
   import Pagination from '../../components/Pagination.svelte';
@@ -34,14 +34,14 @@
     await fetchEpisodes(1);
     isLoading = false;
   });
-  
+
   $: {
     filterItems = items.filter(item =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.episode.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }
-  
+
   async function fetchEpisodes(page) {
     try {
       const episodes = await getAllEpisodes(page.detail);
@@ -169,6 +169,7 @@
         {#each Object.values(seasons) as season}
         <div class="season-progress">
           <div class="season-info">
+          {console.log(season)}
             <p>{season.title}</p>
             <p>{season.seenEpisodes.length}/{season.totalEpisodes}</p>
           </div>

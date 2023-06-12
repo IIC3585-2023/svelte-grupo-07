@@ -8,8 +8,7 @@
   import { addFilter, removeFilter } from "../stores/PortalStore";
   export let character;
   export let toPicker;
-  export let action = 1; // -1 remove 0 nothing 1 add
-  export let dispatch;
+  export let action = 1;
   let isModalOpen = false;
 	function toggleModal() {
 		isModalOpen = !isModalOpen;
@@ -22,7 +21,6 @@
         removeFilter('character', character);
       } else if (action === 1) {
         addFilter('character', character);
-        dispatch('characterSelected', character);
       }
     }
     else
@@ -106,6 +104,6 @@
     <CharacterDetailModal
       characterId={character.id}
     />
-  {/if}  
+  {/if}
   <span>{character.name}</span>
 </div>

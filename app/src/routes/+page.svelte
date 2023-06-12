@@ -21,7 +21,7 @@
     width: 100%;
     object-fit: cover;
   }
-  
+
 
   .home_section {
     display: flex;

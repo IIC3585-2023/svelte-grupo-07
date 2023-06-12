@@ -23,9 +23,12 @@
   countSeenEpisodesStore.subscribe((seenEpisodes) => {
     countSeenEpisodes = seenEpisodes.length;
   });
-  
-  onMount(() => {
-    fetchEpisodes(1);
+
+  let isLoading = true;
+
+  onMount(async () => {
+    await fetchEpisodes(1);
+    isLoading = false;
   });
   
   $: {
@@ -144,6 +147,7 @@
 </style>
 
 <div>
+  {#if !isLoading}
   <PageHeader title={title} bind:searchTerm={searchTerm} />
   <div class="card-container">
     <div class="progress-container">
@@ -179,4 +183,5 @@
     {/each}
   </div>
   <Pagination totalPages={totalPages} on:fetchData="{fetchEpisodes}" />
+  {/if}
 </div>

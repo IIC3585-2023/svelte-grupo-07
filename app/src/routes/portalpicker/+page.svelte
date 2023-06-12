@@ -178,6 +178,7 @@ import { onMount } from 'svelte';
       {:else if answer===1}
         <h2>El episodio recomendado es</h2>
         <h3>{recommendedEpisode.name} {recommendedEpisode.episode}</h3>
+        <button on:click={activatePortal}>Activar Portal</button>
       {/if}
     </div>
     <h3>Filtros Seleccionados</h3>

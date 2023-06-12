@@ -16,8 +16,11 @@
   let searchTerm = '';
   const title = "Lugares";
 
-  onMount(() => {
-    fetchLocations(1);
+  let isLoading = true;
+
+  onMount(async () => {
+    await fetchLocations(1);
+    isLoading = false;
   });
 
   $: {
@@ -51,6 +54,7 @@
   }
 </style>
 <div>
+  {#if !isLoading}
   <PageHeader title={title} bind:searchTerm={searchTerm} />
   <div class="card-container">
     {#each filterItems as item (item.id)}
@@ -60,6 +64,7 @@
     {/each}
   </div>
   <Pagination totalPages = {totalPages} on:fetchData="{fetchLocations}" />
+  {/if}
 </div>
 
 

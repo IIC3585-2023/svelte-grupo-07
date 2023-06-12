@@ -13,8 +13,11 @@
   let searchTerm = '';
   const title = "Personajes";
 
+  let isLoading = true;
+
   onMount(async () => {
     await fetchCharacters(1);
+    isLoading = false;
   });
 
   $: {
@@ -64,6 +67,7 @@
 </style>
 
 <div>
+  {#if !isLoading}
   <PageHeader title={title} bind:searchTerm={searchTerm} />
   <div class="card-container">
     {#each filteredItems as item (item.id)}
@@ -73,4 +77,5 @@
     {/each}
   </div>
   <Pagination totalPages = {totalPages} on:fetchData="{fetchCharacters}" />
+  {/if}
 </div>

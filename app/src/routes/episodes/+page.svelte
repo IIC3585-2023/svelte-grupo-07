@@ -6,7 +6,7 @@
   import Pagination from '../../components/Pagination.svelte';
   import { getAllEpisodes } from '../../services';
   import EpisodeCard from './EpisodeCard.svelte';
-  import { countSeenEpisodesStore, seasonProgressStore, updateSeasonProgress } from '../../store';
+  import { countSeenEpisodesStore, seasonProgressStore, updateSeasonProgress } from '../../stores/TrackingStore';
 
   /**
    * @type {any[] | undefined}

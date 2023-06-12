@@ -1,7 +1,7 @@
 <script>
   // @ts-nocheck
   import { getCharactersByIds } from '../../services';
-  import { seenEpisodesStore, countSeenEpisodesStore } from '../../store';
+  import { seenEpisodesStore, countSeenEpisodesStore } from '../../stores/TrackingStore';
   import { onMount, onDestroy } from 'svelte';
   
   import CharacterItem from '../../components/CharacterItem.svelte';

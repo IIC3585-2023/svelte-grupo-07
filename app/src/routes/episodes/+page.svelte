@@ -6,7 +6,7 @@
   import Pagination from '../../components/Pagination.svelte';
   import { getAllEpisodes } from '../../services';
   import EpisodeCard from './EpisodeCard.svelte';
-  import { countSeenEpisodesStore, seasonProgressStore, updateSeasonProgress } from '../../store';
+  import { countSeenEpisodesStore, seasonProgressStore, updateSeasonProgress } from '../../stores/TrackingStore';
 
   /**
    * @type {any[] | undefined}
@@ -169,7 +169,6 @@
         {#each Object.values(seasons) as season}
         <div class="season-progress">
           <div class="season-info">
-          {console.log(season)}
             <p>{season.title}</p>
             <p>{season.seenEpisodes.length}/{season.totalEpisodes}</p>
           </div>

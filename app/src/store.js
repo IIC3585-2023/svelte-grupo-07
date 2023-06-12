@@ -18,3 +18,16 @@ export const countSeenEpisodesStore = {
   },
 };
 
+export const seasonProgressStore = writable({});
+
+export const updateSeasonProgress = (seasonNumber, seenEpisodes, totalEpisodes) => {
+  seasonProgressStore.update((prevProgress) => {
+    const updatedProgress = { ...prevProgress };
+    updatedProgress[seasonNumber] = {
+      seenEpisodes,
+      totalEpisodes,
+      progress: Math.floor((seenEpisodes.length / totalEpisodes) * 100),
+    };
+    return updatedProgress;
+  });
+};
